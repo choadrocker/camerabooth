@@ -7,7 +7,7 @@ Boot, run raspi-config and enable the camera and ssh, set w/e else you like (loc
 ```
 sudo -i
 apt-get update && sudo apt-get upgrade -y
-apt-get install -y python-pygame
+apt-get install -y python-pygame git
 echo "bcm2835-v4l2" >> /etc/modules-load.d/modules.conf
 reboot
 ```

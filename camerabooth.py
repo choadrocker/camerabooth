@@ -64,7 +64,7 @@ def updateDisplay(message, size=180, color=red):
   textpos.centery = background.get_rect().centery
   background.blit(text, textpos)
   screen.blit(background, (0,0))
-  pygame.display.flip()
+  pygame.display.update()
 
 # flashDisplay("You lose!", 3, 60, red)
 def flashDisplay(message, flashes=5, size=180, color=red):
