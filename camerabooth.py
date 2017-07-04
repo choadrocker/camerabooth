@@ -11,6 +11,8 @@ import time
 # 1000% dependent on picam installed and running as a service
 picam_home = '/home/pi/picam'
 
+recording_length = 3
+
 pygame.init()
 #pygame.mouse.set_visible(False)
 screen = pygame.display.set_mode((800,480),pygame.FULLSCREEN)
@@ -51,9 +53,9 @@ def countDown(message, timer=30, color=red, bg=black):
   for tick in range(0, timer):
     nmessage = "%s: %i" % (message, (timer - tick))
     updateDisplay(nmessage, standard_text, color, bg)
-    time.sleep(.6)
-    updateDisplay("")
-    time.sleep(.4)
+    time.sleep(1)
+    #updateDisplay("")
+    #time.sleep(.4)
 
 def updateDisplay(message, size=standard_text, color=red, bg=black):
   """Update the display optionally with a message"""
@@ -75,64 +77,36 @@ def flashDisplay(message, flashes=5, size=standard_text, color=red, bg=red):
     updateDisplay("")
     time.sleep(.4)
 
-def button(msg,x,y,w,h,ic,ac,action=None):
-  mouse = pygame.mouse.get_pos()
-  click = pygame.mouse.get_pressed()
-  print(click)
-  if x+w > mouse[0] > x and y+h > mouse[1] > y:
-    pygame.draw.rect(screen, ac,(x,y,w,h))
-
-    if click[0] == 1 and action != None:
-      action()
-  else:
-    pygame.draw.rect(screen, ic,(x,y,w,h))
-
-  smallText = pygame.font.Font(None, tiny_text)
-  textSurf, textRect = text_objects(msg, smallText)
-  textRect.center = ( (x+(w/2)), (y+(h/2)) )
-  screen.blit(textSurf, textRect)
-
-def game_loop():
+def record():
+  """Record the recording"""
   updateDisplay("Get ready to record!", standard_text, red)
   time.sleep(2)
   updateDisplay("You have 30 seconds", standard_text, red)
+  time.sleep(2)
   countDown("Recording in", 3, red, black)
   startRecording()
-  countDown("Recording", 30, black, red)
+  countDown("Recording", recording_length, black, red)
   stopRecording()
   updateDisplay("Thank you", large_text)
   time.sleep(10)
   updateDisplay("#fuckyourburn", tiny_text)
   time.sleep(.5)
+  updateDisplay("Touch the screen to tell your story", standard_text)
 
 
-def quitgame():
-  pygame.quit()
-
-def text_objects(text, font):
-  textSurface = font.render(text, True, black)
-  return textSurface, textSurface.get_rect()
-
-def game_intro():
-  intro = True
-  updateDisplay("Touch screen to begin", standard_text)
-  while intro:
+def main_loop():
+  """Main Loop"""
+  updateDisplay("Touch the screen to tell your story", standard_text)
+  while True:
+    clock.tick(15)
     for event in pygame.event.get():
-      print(event)
-      if event.type == pygame.QUIT:
-        pygame.quit()
-        quit()
+      if event.type == pygame.MOUSEBUTTONDOWN:
+        print(event)
+        record()
 
-      updateDisplay("Ready to tell your story?", standard_text)
-      button("GO!",150,400,100,50,green,bright_green,game_loop)
-      button("Quit",550,400,100,50,red,bright_red,quitgame)
-
-      pygame.display.update()
-      clock.tick(60)
-
-
-flashDisplay("Loading...", 3, standard_text, red, black)
-game_intro()
-game_loop()
-pygame.quit()
-quit()
+#flashDisplay("Loading...", 3, standard_text, red, black)
+#game_intro()
+#game_loop()
+main_loop()
+#pygame.quit()
+#quit()
