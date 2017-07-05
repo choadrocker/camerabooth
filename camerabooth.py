@@ -9,7 +9,8 @@ import time
 
 # 1000% dependent on picam installed and running as a service
 PICAM_HOME = '/home/pi/picam'
-RECORDING_LENGTH = 3
+RECORDING_LENGTH = 5
+AFTER_PAUSE_LENGTH = 3
 
 # colors
 BLACK = (0,0,0)
@@ -50,7 +51,7 @@ def stopRecording():
   open('%s/hooks/stop_record' % PICAM_HOME, 'w').close()
 
 def countDown(message, timer=30, color=RED, bg=BLACK):
-  """SHhw a count down message and timer to the display"""
+  """Show a count down message and timer to the display"""
   for tick in range(0, timer):
     nmessage = "%s: %i" % (message, (timer - tick))
     updateDisplay(nmessage, STANDARD_TEXT, color, bg)
@@ -89,7 +90,7 @@ def record():
   countDown("Recording", RECORDING_LENGTH, BLACK, RED)
   stopRecording()
   updateDisplay("Thank you", LARGE_TEXT)
-  time.sleep(10)
+  time.sleep(AFTER_PAUSE_LENGTH)
   updateDisplay("#fuckyourburn", TINY_TEXT)
   time.sleep(.5)
   updateDisplay("Touch the screen to tell your story", STANDARD_TEXT)
