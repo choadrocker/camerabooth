@@ -1,12 +1,12 @@
 ## Start with the latest raspbian (2017-04-10 is what I used)
 
-Boot, run raspi-config and enable the camera and ssh, set w/e else you like (locale, tz, keyboard, etc)
+Boot, run raspi-config and enable the camera, ssh, and set w/e else you like (locale, tz, keyboard, etc)
 
 <!--https://raspberrypi.stackexchange.com/questions/14229/how-can-i-enable-the-camera-without-using-raspi-config-->
 
 ```
 sudo -i
-apt-get update && sudo apt-get upgrade -y
+apt-get update && apt-get upgrade -y
 apt-get install -y python-pygame git
 echo "bcm2835-v4l2" >> /etc/modules-load.d/modules.conf
 reboot
@@ -16,13 +16,20 @@ reboot
 
 https://github.com/iizukanao/picam
 
-### Read about ft5406 lib
-https://github.com/pimoroni/python-multitouch
+Use `arecord -l` to make sure your usb sound card is detected and set properly in /etc/default/picam
 
-ft5406 has been patched to run with python 2.7
+## Copy the etc files into place to run picam as a service
+<!--from https://github.com/iizukanao/picam/tree/master/etc-->
+```
+sudo cp ansible/camerabooth/files/etc/init.d/picam /etc/init.d/
+sudo cp ansible/camerabooth/files/etc/default/picam /etc/default/
+sudo update-rc.d picam defaults
+sudo service picam start
+```
 
+## Add to /etc/rc.local to disable console blanking
+`sudo sh -c "TERM=linux setterm -blank 0 >/dev/tty0"`
 
-Use `arecord -l` to make sure your usb sound card is detected
 
 
 

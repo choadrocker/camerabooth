@@ -1,63 +1,64 @@
 #!/usr/bin/env python
 
 import os
-#import datetime as dt
-#from pygame.locals import *
-#from signal import pause
 import pygame
+from pygame.locals import *
+import subprocess
+import sys
 import time
-#from subprocess import Popen
 
 # 1000% dependent on picam installed and running as a service
-picam_home = '/home/pi/picam'
+PICAM_HOME = '/home/pi/picam'
+RECORDING_LENGTH = 3
 
-recording_length = 3
+# colors
+BLACK = (0,0,0)
+RED = (200,0,0)
+
+# standard text sizes
+TINY_TEXT = 20
+SMALL_TEXT = 30
+STANDARD_TEXT = 60
+LARGE_TEXT = 90
 
 pygame.init()
-#pygame.mouse.set_visible(False)
+pygame.mouse.set_visible(False)
 screen = pygame.display.set_mode((800,480),pygame.FULLSCREEN)
 background = pygame.Surface(screen.get_size())
 background = background.convert()
 clock = pygame.time.Clock()
 
-# colors
-black = (0,0,0)
-white = (255,255,255)
-red = (200,0,0)
-bright_red = (255,0,0)
-green = (0,200,0)
-bright_green = (0,255,0)
-
-# standard text sizes
-tiny_text = 20
-small_text = 30
-standard_text = 60
-large_text = 90
+def checkForPicam():
+  """If picam isn't running, this is all wasted"""
+  try:
+    subprocess.check_output(["pgrep", "picam"])
+  except:
+    sys.exit("Picam isn't running?")
 
 def startRecording():
   """Touch a start recording hook for picam"""
   print("start recording")
-  screen.fill(red)
+  screen.fill(RED)
   pygame.display.update()
-  open('%s/hooks/start_record' % picam_home, 'w').close()
+  open('%s/hooks/start_record' % PICAM_HOME, 'w').close()
 
 def stopRecording():
   """Touch a stop recording hook for picam"""
   print("stop recording")
-  screen.fill(black)
+  screen.fill(BLACK)
   pygame.display.update()
-  open('%s/hooks/stop_record' % picam_home, 'w').close()
+  open('%s/hooks/stop_record' % PICAM_HOME, 'w').close()
 
-def countDown(message, timer=30, color=red, bg=black):
-  """Flash a count down message and timer to the display"""
+def countDown(message, timer=30, color=RED, bg=BLACK):
+  """SHhw a count down message and timer to the display"""
   for tick in range(0, timer):
     nmessage = "%s: %i" % (message, (timer - tick))
-    updateDisplay(nmessage, standard_text, color, bg)
+    updateDisplay(nmessage, STANDARD_TEXT, color, bg)
     time.sleep(1)
     #updateDisplay("")
     #time.sleep(.4)
 
-def updateDisplay(message, size=standard_text, color=red, bg=black):
+def updateDisplay(message, size=STANDARD_TEXT, color=RED, bg=BLACK):
   """Update the display optionally with a message"""
   background.fill(bg)
   font = pygame.font.Font(None, size)
@@ -69,7 +70,7 @@ def updateDisplay(message, size=standard_text, color=red, bg=black):
   screen.blit(background, (0,0))
   pygame.display.update()
 
-def flashDisplay(message, flashes=5, size=standard_text, color=red, bg=red):
+def flashDisplay(message, flashes=5, size=STANDARD_TEXT, color=RED, bg=RED):
   """Flash a message to the display"""
   for flash in range(0, flashes):
     updateDisplay(message, size, color, bg)
@@ -79,34 +80,30 @@ def flashDisplay(message, flashes=5, size=standard_text, color=red, bg=red):
 
 def record():
   """Record the recording"""
-  updateDisplay("Get ready to record!", standard_text, red)
+  updateDisplay("Get ready to record!", STANDARD_TEXT, RED)
   time.sleep(2)
-  updateDisplay("You have 30 seconds", standard_text, red)
+  updateDisplay("You have 30 seconds", STANDARD_TEXT, RED)
   time.sleep(2)
-  countDown("Recording in", 3, red, black)
+  countDown("Recording in", 3, RED, BLACK)
   startRecording()
-  countDown("Recording", recording_length, black, red)
+  countDown("Recording", RECORDING_LENGTH, BLACK, RED)
   stopRecording()
-  updateDisplay("Thank you", large_text)
+  updateDisplay("Thank you", LARGE_TEXT)
   time.sleep(10)
-  updateDisplay("#fuckyourburn", tiny_text)
+  updateDisplay("#fuckyourburn", TINY_TEXT)
   time.sleep(.5)
-  updateDisplay("Touch the screen to tell your story", standard_text)
-
+  updateDisplay("Touch the screen to tell your story", STANDARD_TEXT)
 
 def main_loop():
   """Main Loop"""
-  updateDisplay("Touch the screen to tell your story", standard_text)
+  updateDisplay("Touch the screen to tell your story", STANDARD_TEXT)
   while True:
     clock.tick(15)
     for event in pygame.event.get():
       if event.type == pygame.MOUSEBUTTONDOWN:
-        print(event)
+        #print(event)
         record()
 
-#flashDisplay("Loading...", 3, standard_text, red, black)
-#game_intro()
-#game_loop()
+checkForPicam()
+flashDisplay("Loading...", 3, STANDARD_TEXT, RED, BLACK)
 main_loop()
-#pygame.quit()
-#quit()
