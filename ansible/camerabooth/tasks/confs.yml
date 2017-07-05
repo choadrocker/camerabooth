@@ -1,0 +1,10 @@
+---
+- lineinfile: dest=/etc/init.d/hostapd regexp=^DAEMON_CONF line="DAEMON_CONF=/etc/hostapd/hostapd.conf"
+#- lineinfile: dest=/etc/dhcpcd.conf line="nohook resolv.conf" state=present
+- copy: src=hostapd.conf dest=/etc/hostapd/hostapd.conf
+- copy: src=dnsmasq.conf dest=/etc/dnsmasq.conf
+- copy: src=resolv.conf.head dest=/etc/resolv.conf.head
+- copy: src=interfaces dest=/etc/network/interfaces backup=yes
+- copy: src=nginx-default dest=/etc/nginx/sites-available/default
+- file: path=/usr/local/bin state=directory mode=0755
+- copy: src=increase_wlan0_tx.sh dest=/usr/local/bin/increase_wlan0_tx.sh mode=755

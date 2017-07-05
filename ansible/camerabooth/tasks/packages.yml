@@ -1,0 +1,6 @@
+---
+  - apt: pkg=hostapd state=present
+  - apt: pkg=dnsmasq state=present
+  - apt: pkg=nginx state=present
+  - apt: pkg=php5-fpm state=present
+  - apt: pkg=ssl-cert state=present

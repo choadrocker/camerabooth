@@ -1,0 +1,3 @@
+---
+  - name: deploy html site
+    copy: src=html dest=/var/www

@@ -1,0 +1,13 @@
+---
+  - service: name=nginx enabled=yes
+  - service: name=nginx state=restarted
+  - service: name=php5-fpm enabled=yes
+  - service: name=php5-fpm state=restarted
+  - service: name=hostapd enabled=yes
+  - service: name=hostapd state=restarted
+  - service: name=dnsmasq enabled=yes
+  - service: name=dnsmasq state=restarted
+  #- name: reboot the host
+  #  command: /sbin/reboot
+  #- name: wait for the host to come back up
+  #  local_action: wait_for host="{{ inventory_hostname }}" search_regex=OpenSSH port=22 timeout=300
