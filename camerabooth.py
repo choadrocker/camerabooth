@@ -39,16 +39,16 @@ def checkForPicam():
 def startRecording():
   """Touch a start recording hook for picam"""
   print("start recording")
+  open('%s/hooks/start_record' % PICAM_HOME, 'w').close()
   screen.fill(RED)
   pygame.display.update()
-  open('%s/hooks/start_record' % PICAM_HOME, 'w').close()
 
 def stopRecording():
   """Touch a stop recording hook for picam"""
   print("stop recording")
+  open('%s/hooks/stop_record' % PICAM_HOME, 'w').close()
   screen.fill(BLACK)
   pygame.display.update()
-  open('%s/hooks/stop_record' % PICAM_HOME, 'w').close()
 
 def countDown(message, timer=30, color=RED, bg=BLACK):
   """Show a count down message and timer to the display"""
