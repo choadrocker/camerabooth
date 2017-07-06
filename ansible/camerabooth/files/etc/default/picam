@@ -3,15 +3,14 @@
 START_PICAM=true
 
 ## absolute path to picam directory
-PICAM_DIR=/run/shm
-#PICAM_DIR=/home/pi/picam
+PICAM_DIR=/home/pi/picam
 
 ## absolute path to picam command
-PICAM_COMMAND=/home/pi/picam/picam
+PICAM_COMMAND=$PICAM_DIR/picam
 
 ## user:group to run picam
+# since the app runs as root, picam needs to run as root too
 UGID="root:root"
-#UGID="pi:pi"
 
 ## pid file
 PIDFILE=/var/run/picam.pid
