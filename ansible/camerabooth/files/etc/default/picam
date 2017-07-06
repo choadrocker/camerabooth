@@ -3,10 +3,11 @@
 START_PICAM=true
 
 ## absolute path to picam directory
-PICAM_DIR=/home/pi/picam
+PICAM_DIR=/run/shm
+#PICAM_DIR=/home/pi/picam
 
 ## absolute path to picam command
-PICAM_COMMAND=$PICAM_DIR/picam
+PICAM_COMMAND=/home/pi/picam/picam
 
 ## user:group to run picam
 UGID="root:root"

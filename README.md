@@ -16,8 +16,6 @@ reboot
 
 https://github.com/iizukanao/picam
 
-Use `arecord -l` to make sure your usb sound card is detected and set properly in /etc/default/picam
-
 ## Copy the etc files into place to run picam as a service
 <!--from https://github.com/iizukanao/picam/tree/master/etc-->
 ```
@@ -26,6 +24,8 @@ sudo cp ansible/camerabooth/files/etc/default/picam /etc/default/
 sudo update-rc.d picam defaults
 sudo service picam start
 ```
+
+Use `arecord -l` to make sure your usb sound card is detected and set properly in /etc/default/picam
 
 ## Add to /etc/rc.local to disable console blanking
 `sudo sh -c "TERM=linux setterm -blank 0 >/dev/tty0"`

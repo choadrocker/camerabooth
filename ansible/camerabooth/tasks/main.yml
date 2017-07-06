@@ -5,6 +5,3 @@
   include: packages.yml
 - name: copy conf files
   include: confs.yml
-- include: site.yml
-- name: restart everything
-  include: restart_services.yml

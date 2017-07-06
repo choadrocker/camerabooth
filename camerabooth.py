@@ -105,6 +105,7 @@ def main_loop():
         #print(event)
         record()
 
-checkForPicam()
-flashDisplay("Loading...", 3, STANDARD_TEXT, RED, BLACK)
-main_loop()
+if __name__ == "__main__":
+  checkForPicam()
+  flashDisplay("Loading...", 3, STANDARD_TEXT, RED, BLACK)
+  main_loop()
