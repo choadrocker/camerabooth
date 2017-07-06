@@ -16,7 +16,7 @@ reboot
 https://github.com/iizukanao/picam#using-a-binary-release
 
 ## Check out this repo
-`git clone https://github.com/choadrocker/camerabooth.git'
+`git clone https://github.com/choadrocker/camerabooth.git`
 
 ## Copy the etc files into place to run picam as a service
 <!--from https://github.com/iizukanao/picam/tree/master/etc-->
