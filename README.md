@@ -31,5 +31,6 @@ Use `arecord -l` to make sure your usb sound card is detected and set properly i
 `sudo sh -c "TERM=linux setterm -blank 0 >/dev/tty0"`
 
 
-
-
+## And to start the app at boot, add something like this to `/etc/rc.local`:
+`python /home/pi/camerabooth/camerabooth.py &`
+With the path to the app and before the `exit 0`
