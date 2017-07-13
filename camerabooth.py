@@ -9,8 +9,10 @@ import time
 
 # 1000% dependent on picam installed and running as a service
 PICAM_HOME = '/home/pi/picam'
-RECORDING_LENGTH = 5
-AFTER_PAUSE_LENGTH = 3
+# these are all in seconds
+RECORDING_LENGTH = 30
+AFTER_PAUSE_LENGTH = 10
+PRE_RECORDING_COUNTDOWN_LENGTH = 3
 
 # colors
 BLACK = (0,0,0)
@@ -50,7 +52,7 @@ def stopRecording():
   screen.fill(BLACK)
   pygame.display.update()
 
-def countDown(message, timer=30, color=RED, bg=BLACK):
+def countDown(message=None, timer=30, color=RED, bg=BLACK):
   """Show a count down message and timer to the display"""
   for tick in range(0, timer):
     nmessage = "%s: %i" % (message, (timer - tick))
@@ -59,7 +61,7 @@ def countDown(message, timer=30, color=RED, bg=BLACK):
     #updateDisplay("")
     #time.sleep(.4)
 
-def updateDisplay(message, size=STANDARD_TEXT, color=RED, bg=BLACK):
+def updateDisplay(message=None, size=STANDARD_TEXT, color=RED, bg=BLACK):
   """Update the display optionally with a message"""
   background.fill(bg)
   font = pygame.font.Font(None, size)
@@ -71,7 +73,7 @@ def updateDisplay(message, size=STANDARD_TEXT, color=RED, bg=BLACK):
   screen.blit(background, (0,0))
   pygame.display.update()
 
-def flashDisplay(message, flashes=5, size=STANDARD_TEXT, color=RED, bg=RED):
+def flashDisplay(message=None, flashes=5, size=STANDARD_TEXT, color=RED, bg=RED):
   """Flash a message to the display"""
   for flash in range(0, flashes):
     updateDisplay(message, size, color, bg)
@@ -83,9 +85,9 @@ def record():
   """Record the recording"""
   updateDisplay("Get ready to record!", STANDARD_TEXT, RED)
   time.sleep(2)
-  updateDisplay("You have 30 seconds", STANDARD_TEXT, RED)
+  updateDisplay("You have %i seconds" % RECORDING_LENGTH, STANDARD_TEXT, RED)
   time.sleep(2)
-  countDown("Recording in", 3, RED, BLACK)
+  countDown("Recording in", PRE_RECORDING_COUNTDOWN_LENGTH, RED, BLACK)
   startRecording()
   countDown("Recording", RECORDING_LENGTH, BLACK, RED)
   stopRecording()
