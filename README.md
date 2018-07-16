@@ -14,7 +14,8 @@
 
 ### Assembly
 Follow the instructions to attach the display to your Raspberry Pi
-Install Raspberrian to your MicroSD card (2018-06-27-raspbian-stretch-lite was used)
+
+Install Raspbian to your MicroSD card (2018-06-27-raspbian-stretch-lite was used)
 
 Boot, run `raspi-config` and enable the camera, ssh, and set w/e else you like (locale, tz, keyboard, etc)
 
@@ -45,6 +46,7 @@ sudo service picam start
 ```
 
 Use `arecord -l` to make sure your usb sound card is detected and set properly in `/etc/default/picam`
+
 Adjust mic gain if needed with `alsamixer`
 
 ### Add the following to /etc/rc.local above the `exit 0`
