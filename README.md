@@ -60,6 +60,7 @@ python /home/pi/camerabooth/camerabooth.py
 
 ### Enjoy!
 Videos will end up in `/home/pi/picam/record/archive`
+
 A 30 second video is about 10 MB
 
 ### Notes
