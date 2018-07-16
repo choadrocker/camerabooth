@@ -1,6 +1,0 @@
----
-- hosts: all
-  user: pi
-  become: true
-  roles:
-    - camerabooth

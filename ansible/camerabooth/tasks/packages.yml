@@ -1,3 +1,0 @@
----
-  - apt: pkg=python-pygame state=present
-  - apt: pkg=git state=present

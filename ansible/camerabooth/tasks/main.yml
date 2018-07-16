@@ -1,7 +1,0 @@
----
-- name: upgrade linux
-  include: upgrade.yml
-- name: install packages
-  include: packages.yml
-- name: copy conf files
-  include: confs.yml

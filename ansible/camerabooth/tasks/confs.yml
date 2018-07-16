@@ -1,3 +1,0 @@
----
-- lineinfile: dest=/etc/init.d/hostapd regexp=^DAEMON_CONF line="DAEMON_CONF=/etc/hostapd/hostapd.conf"
-#- lineinfile: dest=/etc/dhcpcd.conf line="nohook resolv.conf" state=present
